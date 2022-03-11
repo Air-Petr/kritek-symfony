@@ -10,6 +10,7 @@
 /bin/
 /composer.phar
 /.idea/
+.env
 
 ###> symfony/framework-bundle ###
 /.env.local
