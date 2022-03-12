@@ -1,3 +1,9 @@
 index:
     path: /
+    methods: GET|POST
     controller: App\Controller\FormPageController::index
+
+invoice:
+    path: /invoice/{id}
+    methods: GET
+    controller: App\Controller\InvoiceController::index

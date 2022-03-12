@@ -1,7 +1,27 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+    New Invoice
+{% endblock %}
+
 {% block body %}
     <div class="container">
+
+        {% if invoices|length > 0 %}
+            <div class="row justify-content-center">
+                <div class="col col-lg-8 mt-4">
+                    <h3>Invoices</h3>
+                    <ul>
+                        {% for invoice in invoices %}
+                            <li>
+                                <a href="{{ path('invoice', {id: invoice.id}) }}">Invoice #{{ invoice.number }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row justify-content-center">
             <div class="col col-lg-8 mt-4">
                 <h3>Add Invoice</h3>

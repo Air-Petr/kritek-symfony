@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Invoice #{{ invoice.number }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-lg-8 mt-4">
+                <h3>Invoice #{{ invoice.number }}</h3>
+
+                <div>{{ invoice.date|date('d.m.Y') }}</div>
+                <div>Customer: {{ invoice.customerId }}</div>
+
+                <h4 class="mt-4">Lines</h4>
+                <ul>
+                    {% for line in invoice.invoiceLines %}
+                        <li>
+                            <div>
+                                {{ line.description }}
+                            </div>
+                            <div>
+                                Quantity: {{ line.quantity }}<br>
+                                Amount: {{ line.amount }}<br>
+                                VAT: {{ line.vatAmount }}<br>
+                                Total: {{ line.totalWithVat }}<br>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

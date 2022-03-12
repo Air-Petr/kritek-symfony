@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Invoice;
 use App\Form\InvoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,11 @@ class FormPageController extends AbstractController
     {
         $form = $this->createForm(InvoiceType::class);
         $form->handleRequest($request);
+        $entityManager = $doctrine->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $invoice = $form->getData();
 
-            $entityManager = $doctrine->getManager();
             $entityManager->persist($invoice);
             $entityManager->flush();
 
@@ -26,6 +27,7 @@ class FormPageController extends AbstractController
         }
 
         return $this->renderForm('form-page.html.twig', [
+            'invoices' => $entityManager->getRepository(Invoice::class)->findAll(),
             'form' => $form
         ]);
     }
