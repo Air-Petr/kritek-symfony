@@ -18,7 +18,7 @@ class InvoiceType extends AbstractType
     {
         $builder
             ->add('date', DateType::class, [
-                'required' => true
+                'required' => true,
             ])
             ->add('number', IntegerType::class, [
                 'required' => true
@@ -31,14 +31,16 @@ class InvoiceType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label' => false,
                 'attr' => [
+                    'class' => 'foo',
                     'data-index' => 0
                 ]
             ])
             ->add('add_item', ButtonType::class, [
-                'label' => 'Add item',
+                'label' => 'Add invoice line',
                 'attr' => [
-                    'class' => 'btn btn-secondary btn-sm add-item',
+                    'class' => 'btn btn-secondary btn-sm add-line',
                 ]
             ])
             ->add('save', SubmitType::class)
