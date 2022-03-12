@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Invoice;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,6 +26,13 @@ class InvoiceType extends AbstractType
                 'required' => true
             ])
             ->add('save', SubmitType::class)
+            ->add('invoice_lines', CollectionType::class, [
+                'entry_type' => InvoiceLineType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
         ;
     }
 

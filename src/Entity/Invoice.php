@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -36,6 +38,16 @@ class Invoice
      * @Assert\NotBlank
      */
     private $customer_id;
+
+    /**
+     * @ORM\OneToMany(targetEntity=InvoiceLine::class, mappedBy="invoice", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $invoiceLines;
+
+    public function __construct()
+    {
+        $this->invoiceLines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,5 +88,40 @@ class Invoice
         $this->customer_id = $customer_id;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, InvoiceLine>
+     */
+    public function getInvoiceLines(): Collection
+    {
+        return $this->invoiceLines;
+    }
+
+    public function addInvoiceLine(InvoiceLine $invoiceLine): self
+    {
+        if (!$this->invoiceLines->contains($invoiceLine)) {
+            $this->invoiceLines[] = $invoiceLine;
+            $invoiceLine->setInvoice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoiceLine(InvoiceLine $invoiceLine): self
+    {
+        if ($this->invoiceLines->removeElement($invoiceLine)) {
+            // set the owning side to null (unless already changed)
+            if ($invoiceLine->getInvoice() === $this) {
+                $invoiceLine->setInvoice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->number;
     }
 }
