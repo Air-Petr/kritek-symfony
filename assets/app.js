@@ -11,9 +11,9 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
-const addTagFormDeleteLink = (item) => {
+const addInvoiceItemFormDeleteLink = (item) => {
     const removeFormButton = document.createElement('button');
-    removeFormButton.innerText = 'Delete this tag';
+    removeFormButton.innerText = 'Delete this item';
     removeFormButton.classList.add('btn-primary')
     removeFormButton.classList.add('btn')
     removeFormButton.classList.add('btn-sm')
@@ -28,14 +28,17 @@ const addTagFormDeleteLink = (item) => {
 };
 
 const addFormToCollection = (e) => {
-    console.log('hello');
-    const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+    const collectionHolder = document.querySelector('#invoice_invoice_lines');
 
-    const item = document.createElement('li');
+    const item = document.createElement('div');
 
     item.innerHTML = collectionHolder
         .dataset
         .prototype
+        .replace(
+            /__name__label__/g,
+            'Item' + (parseInt(collectionHolder.dataset.index) + 1)
+        )
         .replace(
             /__name__/g,
             collectionHolder.dataset.index
@@ -45,17 +48,17 @@ const addFormToCollection = (e) => {
 
     collectionHolder.dataset.index++;
 
-    addTagFormDeleteLink(item);
+    addInvoiceItemFormDeleteLink(item);
 };
 
 document
-    .querySelectorAll('.add_item_link')
+    .querySelectorAll('.add-item')
     .forEach(btn => {
         btn.addEventListener("click", addFormToCollection)
     });
 
 document
     .querySelectorAll('ul.invoice-lines li')
-    .forEach((tag) => {
-        addTagFormDeleteLink(tag)
+    .forEach((invoiceItem) => {
+        addInvoiceItemFormDeleteLink(invoiceItem)
     })

@@ -5,28 +5,7 @@
         <div class="row justify-content-center">
             <div class="col col-lg-8 mt-4">
                 <h3>Add Invoice</h3>
-
-                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-
-                    {{ form_row(form.date) }}
-                    {{ form_row(form.number) }}
-                    {{ form_row(form.customer_id) }}
-
-                    <ul class="invoice-lines"
-                        data-index="{{ form.invoice_lines|length > 0 ? form.invoice_lines|last.vars.name + 1 : 0 }}"
-                        data-prototype="{{ form_widget(form.invoice_lines.vars.prototype)|e('html_attr') }}"
-                    ></ul>
-                    <button type="button" class="add_item_link btn-primary btn btn-sm" data-collection-holder-class="invoice-lines">Add a line</button>
-
-                    <ul>
-                        {% for error in errors %}
-                            <li>{{ error.message }}</li>
-                        {% endfor %}
-                    </ul>
-
-                    {{ form_row(form.save, { 'label': 'Submit' }) }}
-
-                {{ form_end(form) }}
+                {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
             </div>
         </div>
     </div>
